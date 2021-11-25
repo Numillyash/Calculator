@@ -1,0 +1,4 @@
+/Users/germanfidarov/ClionProjects/LCalc/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/Users/germanfidarov/ClionProjects/LCalc/cmake-build-debug/CMakeFiles/edit_cache.dir
+/Users/germanfidarov/ClionProjects/LCalc/cmake-build-debug/CMakeFiles/Test.dir
+/Users/germanfidarov/ClionProjects/LCalc/cmake-build-debug/CMakeFiles/LCalc.dir
