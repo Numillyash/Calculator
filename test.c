@@ -99,7 +99,7 @@ int calculate(char str[])
         {
             if (i != 0 && len != 0)
             {
-                int flag = 0; // flag to catch factorial operation
+                int flag = 0; // Флаг, ловящий факториал
 
                 reverse(&n);
                 if (ch == '!')
@@ -289,7 +289,6 @@ int main()
     if (fp == NULL)
         exit(EXIT_FAILURE);
 
-    int flag_end = 0;
     int count = 1;
 
     char *exp = (char *) malloc(1000000 * sizeof(char));
@@ -299,7 +298,6 @@ int main()
         if (line[read - 2] == '\\')
         {
             strcat(exp, line);
-//            flag_end = 1;
         }
 
         else
