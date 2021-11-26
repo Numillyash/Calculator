@@ -41,6 +41,7 @@ int eval(number *number1, number *number2, char sign) // Вычисляет вы
 {
     if (sign == '^' && number2->negative == -1)
     {
+        printf("ERROR degree");
         return -1;
     }
     switch (sign)
@@ -80,14 +81,16 @@ int calculate(char str[])
             printf("(x)!\n");
             char res = popS(SGsigns);
             if (res == '~')
+            {
                 return -1;
+            }
 
             continue;
         }
 
         if (ch >= '0' && ch <= '9')
         {
-            if (len == 0 && ch == '0')
+            if (len == 1 && n.mas[0] == 0)
                 return -1;
 
             add_element(&n, ch - '0');
@@ -97,6 +100,11 @@ int calculate(char str[])
 
         else
         {
+            if (ch == '\\' || ch == '\n' || ch == EOF)
+            {
+                continue;
+            }
+
             if (i != 0 && len != 0)
             {
                 int flag = 0; // Флаг, ловящий факториал
@@ -135,16 +143,25 @@ int calculate(char str[])
                     if (str[i - 1] == '(')
                     {
                         n.negative = -1;
+                        printf("An unary minus!\n");
                     }
                     else
                     {
-                        printf("ERROR 2 !!!\n");
-                        return -1;
+                        // TODO: IF it is a sign
+                        // printf("Not an unary minus! %c\n", str[i - 1]);
+
+                        if (priority(ch) < 5 && priority(ch) != 0)
+                        {
+                            printf("ERROR 2 !!!\n");
+                            return -1;
+                        }
+
                     }
                 }
                 else
                 {
                     n.negative = -1;
+                    printf("An unary minus 2!\n");
                 }
                 continue;
             }
@@ -157,11 +174,6 @@ int calculate(char str[])
             {
                 printf("ERROR 3 !!!\n");
                 return -1;
-            }
-
-            if (ch == '\\' || ch == '\n' || ch == EOF)
-            {
-                continue;
             }
 
             char under = 'e';
