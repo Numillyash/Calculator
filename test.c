@@ -309,8 +309,16 @@ int main()
 
             if (res == 0)
             {
-                fprintf(stdout, "Ответ: ");
-                print_number_d(&RES);
+                if (line[read - 1] == '\\') // Защита от '\' в последней строке
+                {
+                    fprintf(stdout, "Некорректно\n");
+                }
+
+                else
+                {
+                    fprintf(stdout, "Ответ: ");
+                    print_number_d(&RES);
+                }
             }
 
             else
