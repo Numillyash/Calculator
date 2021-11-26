@@ -1,0 +1,4 @@
+/Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_C_COMPILER=/usr/bin/gcc -DCMAKE_CXX_COMPILER=/usr/bin/gcc -DCMAKE_DEPENDS_USE_COMPILER=FALSE -G "CodeBlocks - Unix Makefiles" /Users/germanfidarov/ClionProjects/LCalc
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /Users/germanfidarov/ClionProjects/LCalc/cmake-build-release

@@ -1,0 +1,1 @@
+/usr/bin/gcc -O3 -DNDEBUG -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX11.3.sdk -Wl,-search_paths_first -Wl,-headerpad_max_install_names CMakeFiles/LCalc.dir/main.c.o CMakeFiles/LCalc.dir/structure.c.o -o LCalc 

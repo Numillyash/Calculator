@@ -1,0 +1,44 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/Users/germanfidarov/ClionProjects/LCalc/stack.h
+stdlib.h
+/Users/germanfidarov/ClionProjects/LCalc/stdlib.h
+structure.h
+/Users/germanfidarov/ClionProjects/LCalc/structure.h
+
+/Users/germanfidarov/ClionProjects/LCalc/stack_signs.h
+stdlib.h
+/Users/germanfidarov/ClionProjects/LCalc/stdlib.h
+
+/Users/germanfidarov/ClionProjects/LCalc/structure.c
+structure.h
+/Users/germanfidarov/ClionProjects/LCalc/structure.h
+stdlib.h
+/Users/germanfidarov/ClionProjects/LCalc/stdlib.h
+
+/Users/germanfidarov/ClionProjects/LCalc/structure.h
+stdio.h
+-
+stdlib.h
+-
+
+/Users/germanfidarov/ClionProjects/LCalc/test.c
+stdio.h
+-
+stack.h
+/Users/germanfidarov/ClionProjects/LCalc/stack.h
+string.h
+/Users/germanfidarov/ClionProjects/LCalc/string.h
+structure.h
+/Users/germanfidarov/ClionProjects/LCalc/structure.h
+stack.h
+/Users/germanfidarov/ClionProjects/LCalc/stack.h
+stack_signs.h
+/Users/germanfidarov/ClionProjects/LCalc/stack_signs.h
+

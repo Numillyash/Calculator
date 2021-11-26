@@ -14,6 +14,8 @@ typedef struct
     unsigned char *mas; // массив данных
 }number;
 
+number empty(); // возвращает пустое число
+
 number init(); // инициализирует обьект структуры с пустым массивом и положительным negative
 
 number copy(number *value); // возвращает структуру идентичную данной
@@ -27,6 +29,8 @@ void add_element(number *object, unsigned char value); // добавляет cha
 void reverse(number *value); // разворачивает число в данном обьекте
 
 void print_number(number *value); // печатает обьект с учетом знака
+
+void print_number_d(number *value); // используется в релиз-режиме
 
 number minus(number *value1, number *value2); // вычитает одно число из другого, с учетом внутреннего знака данных на вход чисел, и возвращает результат типа number
 

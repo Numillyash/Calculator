@@ -65,7 +65,7 @@ char peekS(struct stack_s *pt)
         return pt->items[pt->top];
     }
     else {
-        exit(EXIT_FAILURE);
+        return '~';
     }
 }
 
@@ -75,8 +75,7 @@ char popS(struct stack_s *pt)
     // check for stack_s underflow
     if (isEmptyS(pt))
     {
-        printf("Underflow\nProgram Terminated\n");
-        exit(EXIT_FAILURE);
+        return '~';
     }
 
     // decrement stack_s size by 1 and (optionally) return the popped element

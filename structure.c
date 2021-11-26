@@ -5,6 +5,14 @@ int _max(int x, int y) {
     return (x > y) ? x : y;
 }
 
+number empty()
+{
+    number n;
+    n.current_count = -1;
+
+    return n;
+}
+
 number init() {
     number result = {0, 1, 1};
     result.mas = (unsigned char *) realloc(result.mas, sizeof(unsigned char));
@@ -49,6 +57,14 @@ void reverse(number *value)
 }
 
 void print_number(number *value) {
+    if (value->negative == -1)
+        printf("-");
+    for (int i = value->current_count - 1; i >= 0; i--)
+        printf("%d", value->mas[i]);
+    printf("\n");
+}
+
+void print_number_d(number *value) {
     if (value->negative == -1)
         printf("-");
     for (int i = value->current_count - 1; i >= 0; i--)

@@ -7,6 +7,13 @@
 #include "stack.h"
 #include "stack_signs.h"
 
+number RES;
+
+#ifdef NDEBUG
+#define printf(...)
+#define print_number(...)
+#endif
+
 int priority(char ch)
 {
     switch (ch)
@@ -30,24 +37,33 @@ int priority(char ch)
     }
 }
 
-number eval(number *number1, number *number2, char sign) // Вычисляет выражение
+int eval(number *number1, number *number2, char sign) // Вычисляет выражение
 {
+    if (sign == '^' && number2->negative == -1)
+    {
+        return -1;
+    }
     switch (sign)
     {
         case '+':
-            return plus(number1, number2);
+            RES = plus(number1, number2);
+            return 0;
         case '-':
-            return minus(number1, number2);
+            RES = minus(number1, number2);
+            return 0;
         case '*':
-            return proizv(number1, number2);
+             RES = proizv(number1, number2);
+            return 0;
         case '^':
-            return degree(number1, number2);
+            RES = degree(number1, number2);
+            return 0;
         default:
-            return init();
+            printf("ERROR 1 %c!!!\n", sign);
+            return -1;
     }
 }
 
-number calculate(char str[])
+int calculate(char str[])
 {
     struct stack_s *SGsigns = newStackS(1000); // Для знаков
     struct stack *STnums = newStack(1000); // Для чисел
@@ -61,13 +77,19 @@ number calculate(char str[])
 
         if(ch == ')' && peekS(SGsigns) == '(')
         {
-            printf("BOOM!\n");
-            popS(SGsigns);
+            printf("(x)!\n");
+            char res = popS(SGsigns);
+            if (res == '~')
+                return -1;
+
             continue;
         }
 
         if (ch >= '0' && ch <= '9')
         {
+            if (len == 0 && ch == '0')
+                return -1;
+
             add_element(&n, ch - '0');
             len++;
             printf("Add %d\n", ch - '0');
@@ -82,6 +104,11 @@ number calculate(char str[])
                 reverse(&n);
                 if (ch == '!')
                 {
+                    if (n.negative == -1)
+                    {
+                        return -1;
+                    }
+
                     n = factorial(&n);
                     printf("FACTORIAL!\n >>");
                     print_number(&n);
@@ -111,8 +138,8 @@ number calculate(char str[])
                     }
                     else
                     {
-                        printf("\nERROR !!!\n");
-                        return init();
+                        printf("ERROR 2 !!!\n");
+                        return -1;
                     }
                 }
                 else
@@ -128,8 +155,13 @@ number calculate(char str[])
 
             if (ch == ' ')
             {
-                printf("ERROR\n");
-                return init();
+                printf("ERROR 3 !!!\n");
+                return -1;
+            }
+
+            if (ch == '\\' || ch == '\n' || ch == EOF)
+            {
+                continue;
             }
 
             char under = 'e';
@@ -157,10 +189,24 @@ number calculate(char str[])
                 printf("Lower prior\n");
                 number num1 = pop(STnums);
                 number num2 = pop(STnums);
+
+                if (num1.current_count == -1 || num2.current_count == -1)
+                    return -1;
+
                 print_number(&num1);
                 print_number(&num2);
 
-                number result = eval(&num2, &num1, popS(SGsigns));
+                char pop_res = popS(SGsigns);
+                if (pop_res == '~')
+                    return -1;
+
+                int res = eval(&num2, &num1, pop_res);
+                if (res == -1)
+                {
+                    printf("ERROR 4 !!!\n");
+                }
+
+                number result = RES;
                 print_number(&result);
                 push(STnums, result);
 
@@ -195,27 +241,90 @@ number calculate(char str[])
     while (!isEmptyS(SGsigns))
     {
         char sg = popS(SGsigns);
+        number num1 = pop(STnums);
+        number num2 = pop(STnums);
+
+        if(sg == '~' || num1.current_count == -1 || num2.current_count == -1)
+            return -1;
+
         printf("%c\n", sg);
 
-        number num1 = pop(STnums);
         printf("Got 1st num!\n");
         print_number(&num1);
 
-        number num2 = pop(STnums);
+
         printf("Got 2nd num!\n");
         print_number(&num2);
 
-        number result = eval(&num2, &num1, sg);
+        int res = eval(&num2, &num1, sg);
+
+        if (res == -1)
+        {
+            printf("ERROR 5 !!!\n");
+            return -1;
+        }
+
+        number result = RES;
         push(STnums, result);
     }
 
     number result = pop(STnums);
-    return result;
+
+    if (result.current_count == -1)
+        return -1;
+
+    RES = result;
+    return 0;
 }
 
 int main()
 {
-    char str[] = "(2+2+3)*2+2"; // Исходная строка
-    number result = calculate(str);
-    print_number(&result);
+    FILE * fp;
+    char * line = NULL;
+
+    size_t len = 0;
+    ssize_t read;
+
+    fp = fopen("input", "r");
+    if (fp == NULL)
+        exit(EXIT_FAILURE);
+
+    int flag_end = 0;
+    int count = 1;
+
+    char *exp = (char *) malloc(1000000 * sizeof(char));
+    while ((read = getline(&line, &len, fp)) != -1)
+    {
+        printf("\n===============\n%s\n===============\n", line);
+        if (line[read - 2] == '\\')
+        {
+            strcat(exp, line);
+//            flag_end = 1;
+        }
+
+        else
+        {
+            strcat(exp, line);
+            int res = calculate(exp);
+            fprintf(stdout, "Выражение %d. ", count);
+            count++;
+
+            if (res == 0)
+            {
+                fprintf(stdout, "Ответ: ");
+                print_number_d(&RES);
+            }
+
+            else
+            {
+                fprintf(stdout, "Некорректно\n");
+            }
+
+            strcpy(exp, "");
+        }
+    }
+
+    fclose(fp);
+    if (line)
+        free(line);
 }

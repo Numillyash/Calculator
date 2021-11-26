@@ -196,6 +196,28 @@ number calculate(char str[])
 
 int main()
 {
+//    FILE * fp;
+//    char * line = NULL;
+//    size_t len = 0;
+//    ssize_t read;
+//
+//    fp = fopen("/etc/motd", "r");
+//    if (fp == NULL)
+//        exit(EXIT_FAILURE);
+//
+//    while ((read = getline(&line, &len, fp)) != -1) {
+////        printf("Retrieved line of length %zu:\n", read);
+//        printf("++++++++ %s +++++++++++\n", line);
+//        if (line[read - 1] == '\\')
+//        {
+//
+//        }
+//    }
+//
+//    fclose(fp);
+//    if (line)
+//        free(line);
+
     char str[] = "-1 + 2"; // Исходная строка
     number result = calculate(str);
     print_number(&result);
