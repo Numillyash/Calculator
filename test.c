@@ -110,8 +110,14 @@ int calculate(char str[])
                 int flag = 0; // Флаг, ловящий факториал
 
                 reverse(&n);
+
+                print_number(&n);
+                printf("PUSH!\n");
+                push(STnums, n);
+
                 if (ch == '!')
                 {
+                    n = pop(STnums);
                     if (n.negative == -1)
                     {
                         return -1;
@@ -120,12 +126,9 @@ int calculate(char str[])
                     n = factorial(&n);
                     printf("FACTORIAL!\n >>");
                     print_number(&n);
+                    push(STnums, n);
                     flag = 1;
                 }
-
-                print_number(&n);
-                printf("PUSH!\n");
-                push(STnums, n);
 
                 if (flag)
                 {
@@ -163,6 +166,24 @@ int calculate(char str[])
                     n.negative = -1;
                     printf("An unary minus 2!\n");
                 }
+                continue;
+            }
+
+            else if(ch == '!')
+            {
+                n = pop(STnums);
+                if (n.negative == -1)
+                {
+                    return -1;
+                }
+
+                n = factorial(&n);
+                printf("FACTORIAL 2!\n >>");
+                print_number(&n);
+                push(STnums, n);
+
+                n = init();
+                len = 0;
                 continue;
             }
 
